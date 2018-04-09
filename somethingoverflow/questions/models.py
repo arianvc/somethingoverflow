@@ -26,6 +26,7 @@ class Post(models.Model):
     body = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     question = models.ForeignKey(Question, related_name='questions_by')
+    author = models.ForeignKey(User, related_name='posts_by')
 
 
 class Reaction(models.Model):  # TODO: not efficient, what's the alternative
@@ -34,7 +35,7 @@ class Reaction(models.Model):  # TODO: not efficient, what's the alternative
     TYPE = {'p':'Plus', 'm':'Minus'}
     status = models.CharField(max_length=1, default='p', choices=dict2tuple4sqlenum(TYPE))
     post = models.ForeignKey(Post, related_name='reactions_for')
-    author = models.ForeignKey(User, related_name='posts_by')
+    author = models.ForeignKey(User, related_name='reactions_by')
     created = models.DateTimeField(auto_now_add=True)
 
 # TODO: comment
