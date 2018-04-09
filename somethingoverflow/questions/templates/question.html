@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Question - {{ question.title }}{% endblock %}
+{% block message %}{{ message }}{% endblock %}
+{% load bootstrap3 %}
+<div class="userstuff">
+  Hi {{ username }}, <a href='logout'>Log out</a>
+</div> <!-- TODO dashboard extends base-->
+<a href="{% url tasks %}">Tasks</a>
+<a href="{% url groups %}">Groups</a>
+{% block content %}
+<div class="col-md-3 col-md-offset-5">
+<form role="form"  class="form-inline" action="/question/{{ question.id }}" method="post">
+  {% csrf_token %}
+  {% bootstrap_form postform %}
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary">Post Answer</button>
+  </div>
+</form>
+</div>
+<div class="col-md-6 col-md-offset-3">
+ <br/>
+    <table class="table table-striped">
+    <tr>
+        <td>{{ question }}</td>
+        <td><a href="/react/q/{{ question.id }}/up">
+          <span class="glyphicon glyphicon-thumbs-down"></span>
+        </a> {{ score }} <a href="/react/q/{{ question.id }}/down">
+          <span class="glyphicon glyphicon-thumbs-down"></span>
+        </a></td>
+      </tr>
+      {% for post in posts %}
+      <tr>
+          <td><a href="/react/p/{{ post.id }}/up">
+          <span class="glyphicon glyphicon-thumbs-down"></span>
+        </a> {{ score }} <a href="/react/p/{{ post.id }}/down">
+          <span class="glyphicon glyphicon-thumbs-down"></span>
+        </a></td>
+        <td>{{ post.body }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Group Tasks{% endblock %}
+{% block message %}{{ message }}{% endblock %}
+<div class="userstuff">
+  Hi {{ username }}, <a href='logout'>Log out</a>
+</div> <!-- TODO dashboard extends base-->
+<a href="{% url tasks %}">Tasks</a>
+<a href="{% url groups %}">Groups</a>
+{% block content %}
+<div class="col-md-6 col-md-offset-3">
+ <br/>
+    <table class="table table-striped">
+      <tr>
+        <th width="50%">Name</th><th>Author</th><th width="40%">Date</th>
+      </tr>
+      {% for task in grouptasks %}
+      <tr>
+        <td>{{ task.title }}</td><td>{{ task.author|title }}</td>
+        <td>{{ task.created }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+{% endblock %}

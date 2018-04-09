@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Log-in{% endblock %}
+{% block message %}{{ message }}{% endblock %}
+{% load bootstrap %}
+{% block content %}
+  <div class="row">
+    <div class="col-md-3 col-md-offset-3">
+      <form role="form"  action="/login" method="post">
+        <legend>Log in</legend>
+          <p>Please, use the following form to login:</p>
+        {% csrf_token %}
+        {{ loginform|bootstrap }}
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Login</button>
+        </div>
+      </form>
+      <form role="form"  action="/recover_request" method="post">
+        <legend>Account recovery</legend>
+        {% csrf_token %}
+        {{ recoverform|bootstrap }}
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Recover</button>
+        </div>
+      </form>
+      <p>Account recovery is under construction <br/>
+        In the mean time contact admin at arianvc@gmail.com
+      </p>
+    </div>
+    <div class="col-md-3">
+      <form role="form"  action="/register" method="post">
+        <legend>Register</legend>
+          <p>Please, fill the following form to register:</p>
+        {% csrf_token %}
+        {{ registerform|bootstrap }}
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Register</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!--
+  {% for field in loginform %}
+    {{ field.name|title }}: {{ field }}
+  {% endfor %} -->
+{% endblock %}

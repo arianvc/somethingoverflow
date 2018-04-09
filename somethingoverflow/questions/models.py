@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 
+from taggit.managers import TaggableManager
 
 dict2tuple4sqlenum = lambda da_dict: tuple((k, da_dict[k]) for k in da_dict)
 
@@ -13,28 +14,30 @@ dict2tuple4sqlenum = lambda da_dict: tuple((k, da_dict[k]) for k in da_dict)
 class Question(models.Model):
     def __str__(self):
         return '{} - {} by {}'.format(self.id, self.title, self.author)
+    author = models.ForeignKey(User, related_name='questions_by')
     title = models.CharField(max_length=255)
     created = models.DateTimeField(auto_now_add=True)
-    author = models.ForeignKey(User, related_name='questions_by')
     body = models.TextField()
+    tags = TaggableManager()
 
 
 class Post(models.Model):
     def __str__(self):
         return '{} Post {}... for '.format(self.id, self.body[:10], self.question.title)
-    body = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
-    question = models.ForeignKey(Question, related_name='questions_by')
+    question = models.ForeignKey(Question, related_name='questions_by', on_delete=models.CASCADE)
     author = models.ForeignKey(User, related_name='posts_by')
+    body = models.TextField()
 
 
-class Reaction(models.Model):  # TODO: not efficient, what's the alternative
+class Reaction(models.Model):  # TODO: not efficient, what's the alternative?
     def __str__(self):
         return '{}-{}-{} reaction {}'.format(self.id, self.author, self.post, self.author)
     TYPE = {'p':'Plus', 'm':'Minus'}
     status = models.CharField(max_length=1, default='p', choices=dict2tuple4sqlenum(TYPE))
-    post = models.ForeignKey(Post, related_name='reactions_for')
+    post = models.ForeignKey(Post, related_name='reactions_for_post', null=True, blank=True, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, related_name='reactions_for_question', null=True, blank=True, on_delete=models.CASCADE)
     author = models.ForeignKey(User, related_name='reactions_by')
-    created = models.DateTimeField(auto_now_add=True)
+    # TODO: SHOULD BE UNIQUE
 
 # TODO: comment

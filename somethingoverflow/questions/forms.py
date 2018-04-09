@@ -30,11 +30,13 @@ class ResetForm(forms.Form):  # TODO: use modelform for use with different field
     new_password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Password, 8 alphanumeric at least'}))
 
 
-class Question(forms.ModelForm):
+class QuestionForm(forms.ModelForm):
     class Meta:
         model = Question
+        fields = ('title', 'body')
 
 
-class Post(forms.ModelForm):
+class PostForm(forms.ModelForm):
     class Meta:
         model = Post
+        fields = ('body', )

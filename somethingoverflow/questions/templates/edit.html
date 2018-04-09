@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Edit{% endblock %}
+{% block message %}{{ message }}{% endblock %}
+{% load bootstrap %}
+<!-- TODO icons -->
+{% block content %}
+    <div class="col-md-2 col-md-offset-5">
+    <form role="form"  class="form" action="/editz" method="POST">
+      <input type="hidden" name="eid" value="{{ eid }}">
+      <input type="hidden" name="etype" value="{{ etype }}">
+      {% csrf_token %}
+      {{ form|bootstrap }}
+      <br/>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </form>
+    </div>
+{% endblock %}
