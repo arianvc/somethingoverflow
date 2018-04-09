@@ -14,6 +14,7 @@ class Question(models.Model):
     def __str__(self):
         return '{} - {} by {}'.format(self.id, self.title, self.author)
     title = models.CharField(max_length=255)
+    created = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, related_name='questions_by')
 
 
@@ -23,6 +24,7 @@ class Post(models.Model):
     TYPE = {'q':'Question', 'a':'Answer'}
     postype = models.CharField(max_length=1, default='q', choices=dict2tuple4sqlenum(TYPE))
     body = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
     question = models.ForeignKey(Question, related_name='questions_by')
 
 
@@ -33,5 +35,6 @@ class Reaction(models.Model):  # TODO: not efficient, what's the alternative
     status = models.CharField(max_length=1, default='p', choices=dict2tuple4sqlenum(TYPE))
     post = models.ForeignKey(Post, related_name='reactions_for')
     author = models.ForeignKey(User, related_name='posts_by')
+    created = models.DateTimeField(auto_now_add=True)
 
 # TODO: comment
