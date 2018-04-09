@@ -16,13 +16,12 @@ class Question(models.Model):
     title = models.CharField(max_length=255)
     created = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, related_name='questions_by')
+    body = models.TextField()
 
 
 class Post(models.Model):
     def __str__(self):
         return '{} Post {}... for '.format(self.id, self.body[:10], self.question.title)
-    TYPE = {'q':'Question', 'a':'Answer'}
-    postype = models.CharField(max_length=1, default='q', choices=dict2tuple4sqlenum(TYPE))
     body = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     question = models.ForeignKey(Question, related_name='questions_by')
