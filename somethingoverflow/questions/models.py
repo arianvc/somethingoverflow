@@ -14,7 +14,7 @@ dict2tuple4sqlenum = lambda da_dict: tuple((k, da_dict[k]) for k in da_dict)
 class Question(models.Model):
     def __str__(self):
         return '{} - {} by {}'.format(self.id, self.title, self.author)
-    author = models.ForeignKey(User, related_name='questions_by')
+    author = models.ForeignKey(User, related_name='questions_by', on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     created = models.DateTimeField(auto_now_add=True)
     body = models.TextField()
@@ -26,7 +26,7 @@ class Post(models.Model):
         return '{} Post {}... for '.format(self.id, self.body[:10], self.question.title)
     created = models.DateTimeField(auto_now_add=True)
     question = models.ForeignKey(Question, related_name='questions_by', on_delete=models.CASCADE)
-    author = models.ForeignKey(User, related_name='posts_by')
+    author = models.ForeignKey(User, related_name='posts_by', on_delete=models.CASCADE)
     body = models.TextField()
 
 
@@ -37,7 +37,7 @@ class Reaction(models.Model):  # TODO: not efficient, what's the alternative?
     status = models.CharField(max_length=1, default='p', choices=dict2tuple4sqlenum(TYPE))
     post = models.ForeignKey(Post, related_name='reactions_for_post', null=True, blank=True, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, related_name='reactions_for_question', null=True, blank=True, on_delete=models.CASCADE)
-    author = models.ForeignKey(User, related_name='reactions_by')
+    author = models.ForeignKey(User, related_name='reactions_by', on_delete=models.CASCADE)
     # TODO: SHOULD BE UNIQUE
 
 # TODO: comment

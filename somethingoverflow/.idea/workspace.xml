@@ -14,11 +14,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/questions/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="290">
-              <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+            <state relative-caret-position="435">
+              <caret line="39" column="90" selection-start-line="39" selection-start-column="90" selection-end-line="39" selection-end-column="90" />
               <folding>
                 <element signature="e#24#63#0" expanded="true" />
               </folding>
@@ -26,11 +26,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/questions/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="423">
-              <caret line="66" column="30" selection-start-line="66" selection-start-column="30" selection-end-line="66" selection-end-column="30" />
+            <state relative-caret-position="307">
+              <caret line="73" column="29" lean-forward="true" selection-start-line="73" selection-start-column="29" selection-end-line="73" selection-end-column="29" />
               <folding>
                 <element signature="e#24#63#0" expanded="true" />
               </folding>
@@ -41,8 +41,8 @@
       <file leaf-file-name="question.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/questions/templates/question.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="655">
-              <caret line="34" column="42" selection-start-line="34" selection-start-column="42" selection-end-line="34" selection-end-column="42" />
+            <state relative-caret-position="580">
+              <caret line="20" column="6" lean-forward="true" selection-start-line="20" selection-start-column="6" selection-end-line="20" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -50,7 +50,7 @@
       <file leaf-file-name="questions.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/questions/templates/questions.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="58">
+            <state relative-caret-position="-389">
               <caret line="8" column="42" selection-start-line="8" selection-start-column="42" selection-end-line="8" selection-end-column="42" />
             </state>
           </provider>
@@ -80,8 +80,11 @@
       <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/questions/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="32" selection-start-column="32" selection-end-column="32" />
+            <state relative-caret-position="290">
+              <caret line="10" column="33" selection-start-line="10" selection-start-column="33" selection-end-line="10" selection-end-column="33" />
+              <folding>
+                <element signature="e#0#40#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -122,11 +125,11 @@
         <option value="$PROJECT_DIR$/questions/forms.py" />
         <option value="$PROJECT_DIR$/questions/templates/base.html" />
         <option value="$PROJECT_DIR$/somethingoverflow/settings.py" />
-        <option value="$PROJECT_DIR$/questions/templates/questions.html" />
-        <option value="$PROJECT_DIR$/questions/urls.py" />
-        <option value="$PROJECT_DIR$/questions/templates/question.html" />
-        <option value="$PROJECT_DIR$/questions/views.py" />
         <option value="$PROJECT_DIR$/questions/models.py" />
+        <option value="$PROJECT_DIR$/questions/templates/question.html" />
+        <option value="$PROJECT_DIR$/questions/urls.py" />
+        <option value="$PROJECT_DIR$/questions/templates/questions.html" />
+        <option value="$PROJECT_DIR$/questions/views.py" />
       </list>
     </option>
   </component>
@@ -233,7 +236,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1920" height="990" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
@@ -299,13 +301,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/questions/templates/questions.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="58">
-          <caret line="8" column="42" selection-start-line="8" selection-start-column="42" selection-end-line="8" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/questions/forms.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-26">
@@ -316,34 +311,44 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/questions/urls.py">
+    <entry file="file://$PROJECT_DIR$/questions/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="32" selection-start-column="32" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/questions/templates/question.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="655">
-          <caret line="34" column="42" selection-start-line="34" selection-start-column="42" selection-end-line="34" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/questions/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="423">
-          <caret line="66" column="30" selection-start-line="66" selection-start-column="30" selection-end-line="66" selection-end-column="30" />
+        <state relative-caret-position="435">
+          <caret line="39" column="90" selection-start-line="39" selection-start-column="90" selection-end-line="39" selection-end-column="90" />
           <folding>
             <element signature="e#24#63#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/questions/models.py">
+    <entry file="file://$PROJECT_DIR$/questions/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="290">
-          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+          <caret line="10" column="33" selection-start-line="10" selection-start-column="33" selection-end-line="10" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/questions/templates/questions.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-389">
+          <caret line="8" column="42" selection-start-line="8" selection-start-column="42" selection-end-line="8" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/questions/templates/question.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="580">
+          <caret line="20" column="6" lean-forward="true" selection-start-line="20" selection-start-column="6" selection-end-line="20" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/questions/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="307">
+          <caret line="73" column="29" lean-forward="true" selection-start-line="73" selection-start-column="29" selection-end-line="73" selection-end-column="29" />
           <folding>
             <element signature="e#24#63#0" expanded="true" />
           </folding>

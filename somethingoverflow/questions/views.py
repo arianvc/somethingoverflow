@@ -49,14 +49,13 @@ def log_in(request, **kwargs):
 def questions(request):
     if request.method == 'POST':
         # new question
-        if request.method == 'POST':
-            form = QuestionForm(request.POST)
-            if form.is_valid():
-                f = form.cleaned_data
-                f['author'] = request.user
-                q = Question(**f)
-                q.save()
-                redirect('question', qid=q.id)
+        form = QuestionForm(request.POST)
+        if form.is_valid():
+            f = form.cleaned_data
+            f['author'] = request.user
+            q = Question(**f)
+            q.save()
+            redirect('question', qid=q.id)
 
     context = {'questions': Question.objects.order_by("-created")[:10],
                'questionform': QuestionForm,
@@ -65,6 +64,8 @@ def questions(request):
 
 
 def question(request, qid=None):
+    if qid == None:
+        qid = Question.objects.first().id
     if request.method == 'POST':
         print('new question', qid)
         if request.method == 'POST':

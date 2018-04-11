@@ -21,17 +21,17 @@
  <br/>
     <table class="table table-striped">
     <tr>
-        <td>{{ question }}</td>
         <td><a href="/react/q/{{ question.id }}/up">
-          <span class="glyphicon glyphicon-thumbs-down"></span>
+          <span class="glyphicon glyphicon-thumbs-up"></span>
         </a> {{ score }} <a href="/react/q/{{ question.id }}/down">
           <span class="glyphicon glyphicon-thumbs-down"></span>
         </a></td>
+        <td>{{ question }}</td>
       </tr>
       {% for post in posts %}
       <tr>
           <td><a href="/react/p/{{ post.id }}/up">
-          <span class="glyphicon glyphicon-thumbs-down"></span>
+          <span class="glyphicon glyphicon-thumbs-up"></span>
         </a> {{ score }} <a href="/react/p/{{ post.id }}/down">
           <span class="glyphicon glyphicon-thumbs-down"></span>
         </a></td>
