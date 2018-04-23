@@ -5,10 +5,39 @@
 <div class="userstuff">
   Hi {{ username }}, <a href='logout'>Log out</a>
 </div> <!-- TODO dashboard extends base-->
-<a href="{% url tasks %}">Tasks</a>
+<a href="{% url questions %}">Questions</a>
 <a href="{% url groups %}">Groups</a>
 {% block content %}
-<div class="col-md-3 col-md-offset-5">
+<div class="col-md-6 col-md-offset-3">
+ <br/>
+    <h1>{{ question.title }}</h1>
+    <table class="table">
+
+    <tr>
+        <td>
+            <table width="100%"><tr><td width="30px">
+          <span class="glyphicon glyphicon-thumbs-up" id="q{{ question.id }}" onclick="update_score(this, 'question', 'up');"></span>
+        <br/> <div id="p{{ question.score }}">{{ question.score }}</div> <br/><span class="glyphicon glyphicon-thumbs-down" id="q{{ question.id }}" onclick="update_score(this, 'question', 'down');"></span>
+        </td><td>{{ question.body }}</td>
+            </tr><tr><td></td><td><div style="float:right"><a href="/profile/{{ question.author.username }}">{{ question.author.username }}</a></div></td></tr>
+            </table>
+        </td>
+      </tr>
+      {% for post in posts %}
+      <tr>
+        <td>
+            <table width="100%"><tr><td width="30px">
+          <span class="glyphicon glyphicon-thumbs-up" id="p{{ post.id }}" onclick="update_score(this, 'post', 'up');"></span>
+        <br/> <div id="p{{ post.score }}">{{ post.score }}</div> <br/><span class="glyphicon glyphicon-thumbs-down" id="p{{ post.id }}" onclick="update_score(this, 'post', 'down');"></span>
+        </td><td>{{ post.body }}</td>
+            </tr><tr><td></td><td><div style="float:right"><a href="/profile/{{ post.author.username }}">{{ post.author.username }}</a></div></td></tr>
+            </table>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+    <div class="col-md-3 col-md-offset-5">
 <form role="form"  class="form-inline" action="/question/{{ question.id }}" method="post">
   {% csrf_token %}
   {% bootstrap_form postform %}
@@ -16,28 +45,6 @@
     <button type="submit" class="btn btn-primary">Post Answer</button>
   </div>
 </form>
+    <button id="score" onclick="Test(this);">Hi</button>
 </div>
-<div class="col-md-6 col-md-offset-3">
- <br/>
-    <table class="table table-striped">
-    <tr>
-        <td><a href="/react/q/{{ question.id }}/up">
-          <span class="glyphicon glyphicon-thumbs-up"></span>
-        </a> {{ score }} <a href="/react/q/{{ question.id }}/down">
-          <span class="glyphicon glyphicon-thumbs-down"></span>
-        </a></td>
-        <td>{{ question }}</td>
-      </tr>
-      {% for post in posts %}
-      <tr>
-          <td><a href="/react/p/{{ post.id }}/up">
-          <span class="glyphicon glyphicon-thumbs-up"></span>
-        </a> {{ score }} <a href="/react/p/{{ post.id }}/down">
-          <span class="glyphicon glyphicon-thumbs-down"></span>
-        </a></td>
-        <td>{{ post.body }}</td>
-      </tr>
-      {% endfor %}
-    </table>
-  </div>
 {% endblock %}

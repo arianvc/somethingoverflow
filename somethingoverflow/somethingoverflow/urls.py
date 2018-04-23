@@ -15,8 +15,16 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from rest_framework import routers
+from restplay import views as rviews
+
+router = routers.DefaultRouter()
+router.register(r'users', rviews.UserViewSet)
+router.register(r'groups', rviews.GroupViewSet)
 
 urlpatterns = [
+    url(r'^', include(router.urls)),
     url(r'^admin/', admin.site.urls),
     url(r'', include('questions.urls')),
+    url(r'^', include('restplay.urls')),
 ]

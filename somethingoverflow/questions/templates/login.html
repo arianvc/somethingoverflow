@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Log-in{% endblock %}
 {% block message %}{{ message }}{% endblock %}
-{% load bootstrap %}
+{% load bootstrap3 %}
 {% block content %}
   <div class="row">
     <div class="col-md-3 col-md-offset-3">
@@ -9,7 +9,7 @@
         <legend>Log in</legend>
           <p>Please, use the following form to login:</p>
         {% csrf_token %}
-        {{ loginform|bootstrap }}
+        {% bootstrap_form loginform %}
         <div class="form-group">
           <button type="submit" class="btn btn-primary">Login</button>
         </div>
@@ -17,7 +17,7 @@
       <form role="form"  action="/recover_request" method="post">
         <legend>Account recovery</legend>
         {% csrf_token %}
-        {{ recoverform|bootstrap }}
+        {% bootstrap_form recoverform %}
         <div class="form-group">
           <button type="submit" class="btn btn-primary">Recover</button>
         </div>
@@ -31,7 +31,7 @@
         <legend>Register</legend>
           <p>Please, fill the following form to register:</p>
         {% csrf_token %}
-        {{ registerform|bootstrap }}
+          {% bootstrap_form registerform %}
         <div class="form-group">
           <button type="submit" class="btn btn-primary">Register</button>
         </div>

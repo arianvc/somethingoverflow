@@ -2,6 +2,7 @@
 {% block title %}Tasks{% endblock %}
 {% block message %}{{ message }}{% endblock %}
 {% load bootstrap3 %}
+
 <div class="userstuff">
   Hi {{ username }}, <a href='logout'>Log out</a>
   <a href="{% url tasks %}">Tasks</a>
@@ -9,15 +10,6 @@
 </div> <!-- TODO dashboard extends base-->
 <!-- TODO icons -->
 {% block content %}
-    <div class="col-md-4 col-md-offset-4">
-    <form role="form"  class="form-inline" action="/questions" method="post">
-      {% csrf_token %}
-      {% bootstrap_form questionform %}
-      <div class="form-group">
-        <button type="submit" class="btn btn-primary">Ask Question</button>
-      </div>
-    </form>
-  </div>
     <div class="col-md-6 col-md-offset-3">
         <table class="table table-striped">
           <tr>
@@ -31,4 +23,13 @@
           {% endfor %}
         </table>
     </div>
+    <div class="col-md-4 col-md-offset-4">
+    <form role="form"  class="form-inline" action="/questions" method="post">
+      {% csrf_token %}
+      {% bootstrap_form questionform %}
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">Ask Question</button>
+      </div>
+    </form>
+  </div>
 {% endblock %}

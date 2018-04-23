@@ -1,10 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 import string
+from datetime import datetime
 
-from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+from django.db.models import Count
+from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.conf import settings
+from django.core.mail import send_mail
+
 
 from django.contrib.auth.models import User, Group
 from .models import Question, Post, Reaction
@@ -18,6 +24,64 @@ random_str = lambda N: ''.join(
 
 # Create your views here.
 
+## Register and activate
+def register(request):
+    message = 'Bad register request' #TODO pass this
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            username = cd.get('username')
+            if len(User.objects.filter(username=username)) != 0:
+                message = 'Username exists! Choose a different one!'
+            else:
+                password = cd.get('password')
+                email = cd.get('email') #TODO: should be unique!
+                first_name = cd.get('first_name')
+                last_name = cd.get('last_name')
+                user = User.objects.create_user(username=username, password=password, email=email, \
+                        first_name=first_name, last_name=last_name)
+                user.is_active = False
+                if user:
+                    user.save()
+                    date = str(user.date_joined)
+                    print(date + email + settings.SECRET_KEY)
+                    print(hash(date + email + settings.SECRET_KEY))
+                    send_mail('Somethingoverflow account activation',
+                              'http://127.0.0.1:8000/activate?username=%s&&code=%s' %
+                              (username, hash(date + email + settings.SECRET_KEY)),
+                              'info@somethingoverflow.com',
+                              [email],
+                              )
+                    message = 'Check your email at '+ email
+                else:
+                    message = 'Error creating user'
+    request.method = 'GET' #TODO: there must be a better way!
+    return log_in(request, message=message) #TODO: redirect with parameters
+
+
+def activate(request):
+    message = 'Wrong activation link, please try again'
+    #data = request.GET
+    #if 'username' in data and 'code' in data:
+    username = request.GET.get('username', '')
+    code = request.GET.get('code', '')
+    if username and code:
+        user = User.objects.get(username=username)
+        email = user.email
+        date = str(user.date_joined)
+        print(username, date, email)
+        print(date + email + settings.SECRET_KEY)
+        print(int(code), ' vs ', hash(date+email+settings.SECRET_KEY))
+        if hash(date+email+settings.SECRET_KEY) == int(code):
+            user.is_active = True
+            user.save()
+            message = 'You have successfully created an account, now you can log in.'
+    return log_in(request, message=message)
+
+
+
+## Logging in and out
 def log_in(request, **kwargs):
     context = {'message': kwargs['message'] if 'message' in kwargs else 'Welcome!',
                'loginform': LoginForm,
@@ -35,7 +99,7 @@ def log_in(request, **kwargs):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return redirect('tasks')  # TODO, message=context['message'])
+                    return redirect('questions')  # Profile? Console?
                 else:
                     context['message'] = 'Disabled account'
             else:
@@ -45,8 +109,16 @@ def log_in(request, **kwargs):
     return render(request, 'login.html', context)
 
 
-# TODO: @login_required
+def log_out(request):
+    if request.user.is_authenticated:
+        logout(request)
+    return redirect('/login')
+
+
+## Site functionality
+# TODO: not @login_required! for form maybe
 def questions(request):
+    print('qs')
     if request.method == 'POST':
         # new question
         form = QuestionForm(request.POST)
@@ -63,9 +135,11 @@ def questions(request):
     return render(request, 'questions.html', context)
 
 
+# TODO: not @login_required!
 def question(request, qid=None):
-    if qid == None:
-        qid = Question.objects.first().id
+    print('q')
+    if not qid:
+        qid = Question.objects.first().id  # extremely weird
     if request.method == 'POST':
         print('new question', qid)
         if request.method == 'POST':
@@ -77,6 +151,18 @@ def question(request, qid=None):
                 q = Post(**f)
                 q.save()
     posts = Post.objects.filter(question__id=qid).order_by("-created")
+    daq = Question.objects.filter(id=qid).get()
+    for post in posts:
+        score = 0
+        sc = Reaction.objects.filter(post=post).values('status').annotate(rcount=Count('status'))
+        for rt in sc:
+            if rt['status'] == 'm':
+                score -= rt['rcount']
+            if rt['status'] == 'p':
+                score += rt['rcount']
+        post.score = score
+        #post.score = Reaction.objects.filter(question=post.question, status='p').count() - Reaction.objects.filter(
+        #    question=post.question, status='m').count()
     context = {'question': Question.objects.get(id=qid),
                'posts': posts,
                'postform': PostForm,
@@ -89,11 +175,16 @@ def edit_question(request, qid):
 
 
 def edit_post(request, pid):
+    print('shit', pid)
+    return HttpResponse('works dude! move on!')
+
+
+def profile(request):
     pass
 
 
-def react(request, rtype, rid, reaction): # TODO: uniqueness
-    react_dict = {'up':'p', 'down':'m'}
+def react(request, rtype, rid, reaction):  # TODO: uniqueness
+    react_dict = {'up': 'p', 'down': 'm'}
     p = None
     q = None
     if rtype == 'q':
@@ -108,3 +199,30 @@ def react(request, rtype, rid, reaction): # TODO: uniqueness
     r.save()
     return out
 
+
+## Test area
+def simple_django_rest(request):
+    pass
+
+
+@login_required
+def react2(request, rtype, rid, reaction):  # TODO: uniqueness
+    react_dict = {'up': 'p', 'down': 'm'}
+    p = None
+    q = None
+    print(rtype)
+    if rtype == 'q':
+        q = Question.objects.get(id=rid)
+        daq = q
+    elif rtype == 'p':
+        p = Post.objects.get(id=rid)
+        daq = p.question
+    else:
+        return HttpResponseForbidden()
+    r, ifcreated = Reaction.objects.update_or_create(status=react_dict[reaction], post=p, question=q,
+                                                     author=request.user)
+    r.save()
+    out = Reaction.objects.filter(question=daq, status='p').count() - Reaction.objects.filter(question=daq,
+                                                                                              status='m').count()
+    out = HttpResponse('UP')
+    return out

@@ -22,6 +22,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '&dm0=k^h0bf=ew5#p6yacwy3x$7$t+3m!4g)*o=_1iaxes(vjq'
 
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -40,6 +43,8 @@ INSTALLED_APPS = [
     'questions',
     'taggit',
     'bootstrap3',
+    'rest_framework',
+    'restplay',
 ]
 
 MIDDLEWARE = [
@@ -121,3 +126,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+

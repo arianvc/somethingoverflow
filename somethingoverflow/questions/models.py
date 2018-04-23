@@ -31,8 +31,15 @@ class Post(models.Model):
 
 
 class Reaction(models.Model):  # TODO: not efficient, what's the alternative?
+    class Meta:
+        unique_together = (('post', 'author', 'question'), )
+
     def __str__(self):
-        return '{}-{}-{} reaction {}'.format(self.id, self.author, self.post, self.author)
+        if self.question:
+            thing = 'q%d' % self.question.id
+        else:
+            thing = 'p%d' % self.post.id
+        return '{}:{}:{}'.format(self.author, thing, self.status)
     TYPE = {'p':'Plus', 'm':'Minus'}
     status = models.CharField(max_length=1, default='p', choices=dict2tuple4sqlenum(TYPE))
     post = models.ForeignKey(Post, related_name='reactions_for_post', null=True, blank=True, on_delete=models.CASCADE)

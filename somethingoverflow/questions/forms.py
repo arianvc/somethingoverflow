@@ -33,7 +33,7 @@ class ResetForm(forms.Form):  # TODO: use modelform for use with different field
 class QuestionForm(forms.ModelForm):
     class Meta:
         model = Question
-        fields = ('title', 'body')
+        fields = ('title', 'body', 'tags', )
 
 
 class PostForm(forms.ModelForm):

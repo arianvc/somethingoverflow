@@ -15,18 +15,64 @@
 .jumbotron {
 background-image: url("/static/jumbobg.jpg");
 background-size: cover;}
+.jumbotron h1{
+    color: #fff;
+}
+
+.jumbotron p{
+    color: #fff;
+}
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+            $("button").click(function () {
+                /*$.get("/editpost/1", function (data, status) {
+                    alert("Data: " + data + "\nStatus: " + status);
+                });*/
+                $.ajax({
+                    type: "GET",
+                    url: "/edit_post/1",
+                    success: function (data) {
+                        alert("Data: " + data);
+                    },
+                    error: function (xhr, status, errorThrown) {
+                        //Here the status code can be retrieved like;
+                        alert('error' + xhr.status, xhr.responseText);
+                    }
+                });
+
+            });
+        });
+    function update_score(event, p2, status){
+        var s = event.id;
+        var AURL = "/react2/"+s[0]+'/'+s.slice(1)+'/'+status;
+        alert(AURL)
+        $.ajax({
+                    type: "GET",
+                    url: AURL,
+                    success: function (data) {
+                        $(event.id).html(data)
+                    },
+                    error: function (xhr, status, errorThrown) {
+                        //Here the status code can be retrieved like;
+                        alert('error' + xhr.status, xhr.responseText);
+                    }
+        });
+
+    }
+</script>
 </head>
 <body>
   <nav class="navbar navbar-inverse">
    <div class="container-fluid">
      <div class="navbar-header">
-       <a class="navbar-brand" href="/">tZuDo</a>
+       <a class="navbar-brand" href="/">SomethingOverflow</a>
      </div>
      <ul class="nav navbar-nav">
        {% if user.is_authenticated %}
-         <li {% if questions %}class="active" {% endif %}><a href="/tasks">Tasks</a></li>
-         <li {% if grouppage %}class="active" {% endif %}><a href="/groups">Groups</a></li>
+         <li {% if questions %}class="active" {% endif %}><a href="/questions">Questions</a></li>
+         <li {% if tagspage %}class="active" {% endif %}><a href="/tags">Tags</a></li>
       {% endif %}
      </ul>
      <ul class="nav navbar-nav navbar-right">
