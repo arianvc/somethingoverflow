@@ -1,18 +1,25 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-import string
+
+import os, string, threading
 from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
-from django.http import HttpResponse, HttpResponseForbidden
-from django.shortcuts import render, redirect
+from django.http import HttpResponse, HttpResponseForbidden, Http404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.conf import settings
 from django.core.mail import send_mail
-
-
 from django.contrib.auth.models import User, Group
+
+from taggit.models import Tag
+
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
+import numpy as np
+from PIL import Image
+
 from .models import Question, Post, Reaction
 from .forms import LoginForm, RegisterForm, RecoverForm, QuestionForm, PostForm
 
@@ -80,7 +87,6 @@ def activate(request):
     return log_in(request, message=message)
 
 
-
 ## Logging in and out
 def log_in(request, **kwargs):
     context = {'message': kwargs['message'] if 'message' in kwargs else 'Welcome!',
@@ -117,26 +123,38 @@ def log_out(request):
 
 ## Site functionality
 # TODO: not @login_required! for form maybe
-def questions(request):
-    print('qs')
+def questions(request, tag_slug=None, page=0):
+    page = int(page)
+    question_list = Question.objects.order_by("-created")
+    #TODO: paged!
     if request.method == 'POST':
         # new question
         form = QuestionForm(request.POST)
         if form.is_valid():
-            f = form.cleaned_data
-            f['author'] = request.user
-            q = Question(**f)
+            q = form.save(commit=False)
+            q.author = request.user
             q.save()
+            form.save_m2m()
+            '''f = form.cleaned_data
+            f['author'] = request.user
+            print('aaaaaaaaaaaaaaaaaaaaaaaaa', f['tags'])
+            q = Question(**f)
+            #q.save()
+            q.tags.add(*tuple(tags))
+            q.save()'''
             redirect('question', qid=q.id)
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        question_list = question_list.filter(tags__in=[tag])
 
-    context = {'questions': Question.objects.order_by("-created")[:10],
+    context = {'questions': question_list[page*10:(page+1)*10],
                'questionform': QuestionForm,
                }
     return render(request, 'questions.html', context)
 
 
 # TODO: not @login_required!
-def question(request, qid=None):
+def question(request, qid=None, action=None):
     print('q')
     if not qid:
         qid = Question.objects.first().id  # extremely weird
@@ -150,6 +168,13 @@ def question(request, qid=None):
                 f['question'] = Question.objects.get(id=qid)
                 q = Post(**f)
                 q.save()
+    actions = {'up': '',
+     'down': '',
+     'delete': '',
+     'edit': '',
+    }
+    if action in actions:
+        pass
     posts = Post.objects.filter(question__id=qid).order_by("-created")
     daq = Question.objects.filter(id=qid).get()
     for post in posts:
@@ -170,8 +195,53 @@ def question(request, qid=None):
     return render(request, 'question.html', context)
 
 
-def edit_question(request, qid):
-    pass
+def tags_view(request):
+    def refresh_image(wd):
+        wordlist = list()
+        for w in wd:
+            for i in range(wd[w]):
+                wordlist.append(w.name)
+        np.random.shuffle(wordlist)
+        print(type(wordlist))
+        text = ' '.join(wordlist)
+        #print(text)
+        basepath = os.path.abspath(os.path.dirname(__file__))
+        imgpath = basepath + "/static/tag_cloud_mask2.jpg"
+        outpath = basepath + '/static/tags_cloud.png'
+        text = (text)
+        wave_mask = np.array(Image.open(imgpath))
+        #wordcloud = WordCloud(width=1280, height=720, mask=wave_mask, max_font_size=40, background_color="white").generate(text)
+        wordcloud = WordCloud(width=640, height=480, background_color="white").generate(text)
+        plt.imshow(wordcloud, interpolation="bilinear")
+        plt.axis("off")
+        plt.margins(x=0, y=0)
+        plt.savefig(outpath)
+    queryset = Tag.objects.all()
+    queryset = queryset.annotate(hit=Count('taggit_taggeditem_items'))
+    taghit = dict()
+    for tag in queryset:
+        taghit[tag] = tag.hit
+    #refresh_image(taghit)
+    context = {'taghit': taghit,
+               }
+    return render(request, 'tags.html', context)
+
+
+def general_edit(request, etype=None, eid=None):
+    context = {}
+    if request.method == 'GET':
+        if etype == 'question':
+            this = Question.objects.get(id=eid)
+        elif etype == 'post':
+            this = Post.objects.get(id=eid)
+        else:
+            raise Http404()
+        context['form'] = QuestionForm(instance=this)
+        return render(request, "edit.html", context)
+    elif request.method == 'POST':
+        pass
+    else:
+        return Http404()
 
 
 def edit_post(request, pid):

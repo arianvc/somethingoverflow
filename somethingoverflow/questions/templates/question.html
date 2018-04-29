@@ -19,7 +19,10 @@
           <span class="glyphicon glyphicon-thumbs-up" id="q{{ question.id }}" onclick="update_score(this, 'question', 'up');"></span>
         <br/> <div id="p{{ question.score }}">{{ question.score }}</div> <br/><span class="glyphicon glyphicon-thumbs-down" id="q{{ question.id }}" onclick="update_score(this, 'question', 'down');"></span>
         </td><td>{{ question.body }}</td>
-            </tr><tr><td></td><td><div style="float:right"><a href="/profile/{{ question.author.username }}">{{ question.author.username }}</a></div></td></tr>
+            </tr><tr><td>
+            </td><td><div>Tags: {% for tag in question.tags.all %}
+                <a href="{% url "questions_by_tag" tag_slug=tag.slug page=0 %}" style="display: inline-block">{{ tag.name }}</a>
+                {% endfor %}
             </table>
         </td>
       </tr>
@@ -45,6 +48,5 @@
     <button type="submit" class="btn btn-primary">Post Answer</button>
   </div>
 </form>
-    <button id="score" onclick="Test(this);">Hi</button>
 </div>
 {% endblock %}

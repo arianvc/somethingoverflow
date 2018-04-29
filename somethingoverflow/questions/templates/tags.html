@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Question - {{ question.title }}{% endblock %}
+{% block message %}{{ message }}{% endblock %}
+{% load bootstrap3 %}
+<div class="userstuff">
+  Hi {{ username }}, <a href='logout'>Log out</a>
+</div> <!-- TODO dashboard extends base-->
+<a href="{% url questions %}">Questions</a>
+<a href="{% url groups %}">Groups</a>
+{% block content %}
+    <img src="/static/tags_cloud.png" class="center-block"/></div>
+    <div class="col-md-6 col-md-offset-3">
+        {% for tag in taghit.keys %}
+            <a href="{% url "questions_by_tag" tag_slug=tag.slug page=0 %}">{{ tag.name }}</a> : {{ tag.hit }}
+        {% endfor %}
+    </div>
+{% endblock %}

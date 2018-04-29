@@ -1,19 +1,22 @@
 {% extends "base.html" %}
-{% block title %}Edit{% endblock %}
+{% block title %}Tasks{% endblock %}
 {% block message %}{{ message }}{% endblock %}
-{% load bootstrap %}
+{% load bootstrap3 %}
+
+<div class="userstuff">
+  Hi {{ username }}, <a href='logout'>Log out</a>
+  <a href="{% url tasks %}">Tasks</a>
+  <a href="{% url groups %}">Groups</a>
+</div> <!-- TODO dashboard extends base-->
 <!-- TODO icons -->
 {% block content %}
-    <div class="col-md-2 col-md-offset-5">
-    <form role="form"  class="form" action="/editz" method="POST">
-      <input type="hidden" name="eid" value="{{ eid }}">
-      <input type="hidden" name="etype" value="{{ etype }}">
+    <div class="col-md-4 col-md-offset-4">
+    <form role="form"  class="form-inline" action="/questions/" method="post">
       {% csrf_token %}
-      {{ form|bootstrap }}
-      <br/>
+      {% bootstrap_form form %}
       <div class="form-group">
         <button type="submit" class="btn btn-primary">Save</button>
       </div>
     </form>
-    </div>
+  </div>
 {% endblock %}
