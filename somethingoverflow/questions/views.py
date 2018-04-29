@@ -206,11 +206,11 @@ def tags_view(request):
         text = ' '.join(wordlist)
         #print(text)
         basepath = os.path.abspath(os.path.dirname(__file__))
-        imgpath = basepath + "/static/tag_cloud_mask2.jpg"
+        # imgpath = basepath + "/static/tag_cloud_mask2.jpg"
         outpath = basepath + '/static/tags_cloud.png'
         text = (text)
-        wave_mask = np.array(Image.open(imgpath))
-        #wordcloud = WordCloud(width=1280, height=720, mask=wave_mask, max_font_size=40, background_color="white").generate(text)
+        # wave_mask = np.array(Image.open(imgpath))
+        # wordcloud = WordCloud(width=1280, height=720, mask=wave_mask, max_font_size=40, background_color="white").generate(text)
         wordcloud = WordCloud(width=640, height=480, background_color="white").generate(text)
         plt.imshow(wordcloud, interpolation="bilinear")
         plt.axis("off")
