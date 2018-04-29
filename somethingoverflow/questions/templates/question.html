@@ -18,7 +18,14 @@
             <table width="100%"><tr><td width="30px">
           <span class="glyphicon glyphicon-thumbs-up" id="q{{ question.id }}" onclick="update_score(this, 'question', 'up');"></span>
         <br/> <div id="p{{ question.score }}">{{ question.score }}</div> <br/><span class="glyphicon glyphicon-thumbs-down" id="q{{ question.id }}" onclick="update_score(this, 'question', 'down');"></span>
-        </td><td>{{ question.body }}</td>
+        </td><tr>
+                <a href="{% url 'general_edit' etype='question' eid=question.id %}">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </a><a href="{% url 'question' action='delete' qid=question.id %}">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </a>
+            </tr>
+                <td>{{ question.body }}</td>
             </tr><tr><td>
             </td><td><div>Tags: {% for tag in question.tags.all %}
                 <a href="{% url "questions_by_tag" tag_slug=tag.slug page=0 %}" style="display: inline-block">{{ tag.name }}</a>

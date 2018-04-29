@@ -153,11 +153,10 @@ def questions(request, tag_slug=None, page=0):
     return render(request, 'questions.html', context)
 
 
-# TODO: not @login_required!
+# not @login_required!
 def question(request, qid=None, action=None):
-    print('q')
     if not qid:
-        qid = Question.objects.first().id  # extremely weird
+        raise Http404()
     if request.method == 'POST':
         print('new question', qid)
         if request.method == 'POST':
@@ -168,13 +167,23 @@ def question(request, qid=None, action=None):
                 f['question'] = Question.objects.get(id=qid)
                 q = Post(**f)
                 q.save()
-    actions = {'up': '',
-     'down': '',
+    actions = {'upvote': '',
+     'downvote': '',
      'delete': '',
      'edit': '',
     }
     if action in actions:
-        pass
+        if action == 'edit':
+            redirect(action, etype='question', eid=qid)
+        elif action == 'delete':
+            Question.objects.filter(id=qid).delete()
+        elif action == 'upvote' or action == 'downvote':
+            # TODO: better voting system
+            pass
+        else:
+            raise Http404()
+    else:
+        raise Http404()
     posts = Post.objects.filter(question__id=qid).order_by("-created")
     daq = Question.objects.filter(id=qid).get()
     for post in posts:
@@ -186,9 +195,12 @@ def question(request, qid=None, action=None):
             if rt['status'] == 'p':
                 score += rt['rcount']
         post.score = score
+        post.owner = request.user == post.author
         #post.score = Reaction.objects.filter(question=post.question, status='p').count() - Reaction.objects.filter(
         #    question=post.question, status='m').count()
-    context = {'question': Question.objects.get(id=qid),
+    the_question = Question.objects.get(id=qid)
+    the_question.owner = the_question.author == request.user
+    context = {'question': the_question,
                'posts': posts,
                'postform': PostForm,
                }
@@ -228,18 +240,29 @@ def tags_view(request):
 
 
 def general_edit(request, etype=None, eid=None):
-    context = {}
+    if etype == 'question':
+        this = Question.objects.get(id=eid)
+    elif etype == 'post':
+        this = Post.objects.get(id=eid)
+    else:
+        raise Http404()
+    owner = request.user == this.author
+    if not owner:
+        raise HttpResponseForbidden()
+    context = {'etype': etype,
+               }
+    forms = {'question': QuestionForm,
+             'post': PostForm}
+    form = forms[etype]
     if request.method == 'GET':
-        if etype == 'question':
-            this = Question.objects.get(id=eid)
-        elif etype == 'post':
-            this = Post.objects.get(id=eid)
-        else:
-            raise Http404()
-        context['form'] = QuestionForm(instance=this)
+        context['form'] = form(instance=this)
         return render(request, "edit.html", context)
+
     elif request.method == 'POST':
-        pass
+        form = form(request.POST or None, instance=this)
+        if form.is_valid():
+            form.save()
+        redirect(etype, eid)
     else:
         return Http404()
 
