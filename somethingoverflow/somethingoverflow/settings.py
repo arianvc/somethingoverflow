@@ -53,10 +53,10 @@ INSTALLED_APPS = [
     'haystack',
     'taggit',
     'bootstrap3',
-    'rest_framework',
+#    'rest_framework',
     'django.middleware.common',
     'questions',
-    'restplay',
+#    'restplay',
 ]
 
 MIDDLEWARE = [
