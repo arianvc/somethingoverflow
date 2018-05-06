@@ -5,19 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0334a822-993b-465e-bb77-a7f3871677d0" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/TODO.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/restplay/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/restplay/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/restplay/apps.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/restplay/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/restplay/migrations/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/restplay/models.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/restplay/serializers.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/restplay/tests.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/restplay/urls.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/restplay/views.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/somethingoverflow/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/somethingoverflow/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/somethingoverflow/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/somethingoverflow/urls.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -34,8 +23,32 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/questions/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="15" selection-start-line="15" selection-end-line="15" />
+            <state relative-caret-position="535">
+              <caret line="184" column="17" selection-start-line="184" selection-start-column="17" selection-end-line="184" selection-end-column="17" />
+              <folding>
+                <element signature="e#24#63#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/questions/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="522">
+              <caret line="38" column="62" selection-start-line="38" selection-start-column="62" selection-end-line="38" selection-end-column="62" />
+              <folding>
+                <element signature="e#24#63#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TODO.md" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/TODO.md">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="19">
+              <caret line="1" column="25" lean-forward="true" selection-start-line="1" selection-start-column="25" selection-end-line="1" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -61,11 +74,20 @@
       <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/questions/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
+            <state relative-caret-position="323">
               <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="questions.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/questions/templates/questions.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="163">
+              <caret line="19" column="55" selection-start-line="19" selection-start-column="55" selection-end-line="19" selection-end-column="55" />
             </state>
           </provider>
         </entry>
@@ -79,18 +101,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="urls.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/somethingoverflow/urls.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="451">
-              <caret line="28" selection-start-line="28" selection-end-line="29" />
-              <folding>
-                <element signature="e#651#692#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="search_indexes.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/questions/search_indexes.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -99,15 +109,6 @@
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/questions/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="76">
-              <caret line="4" selection-start-line="4" selection-end-line="4" selection-end-column="43" />
             </state>
           </provider>
         </entry>
@@ -131,10 +132,12 @@
       <find>for</find>
       <find>redirect('question</find>
       <find>redirect(</find>
-      <find>redirect</find>
       <find>Hi</find>
       <find>NoReverseMatch</find>
       <find>rest_framework</find>
+      <find>etypr</find>
+      <find>redirect</find>
+      <find>dict2tuple4sqlenum</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$</dir>
@@ -162,18 +165,19 @@
         <option value="$PROJECT_DIR$/questions/templates/login.html" />
         <option value="$PROJECT_DIR$/restplay/models.py" />
         <option value="$PROJECT_DIR$/restplay/serializers.py" />
-        <option value="$PROJECT_DIR$/questions/models.py" />
-        <option value="$PROJECT_DIR$/mock.py" />
         <option value="$PROJECT_DIR$/questions/templates/tags.html" />
-        <option value="$PROJECT_DIR$/questions/templates/questions.html" />
         <option value="$PROJECT_DIR$/questions/urls.py" />
         <option value="$PROJECT_DIR$/questions/templates/question.html" />
         <option value="$PROJECT_DIR$/somethingoverflow/config/elasticsearch.yml" />
-        <option value="$PROJECT_DIR$/questions/views.py" />
         <option value="$PROJECT_DIR$/questions/search_indexes.py" />
         <option value="$PROJECT_DIR$/venv/lib/python3.6/site-packages/rest_framework/routers.py" />
         <option value="$PROJECT_DIR$/somethingoverflow/settings.py" />
         <option value="$PROJECT_DIR$/somethingoverflow/urls.py" />
+        <option value="$PROJECT_DIR$/questions/templates/questions.html" />
+        <option value="$PROJECT_DIR$/questions/models.py" />
+        <option value="$PROJECT_DIR$/mock.py" />
+        <option value="$PROJECT_DIR$/questions/views.py" />
+        <option value="$PROJECT_DIR$/TODO.md" />
       </list>
     </option>
   </component>
@@ -200,11 +204,6 @@
             <path>
               <item name="somethingoverflow" type="b2602c69:ProjectViewProjectNode" />
               <item name="somethingoverflow" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="somethingoverflow" type="b2602c69:ProjectViewProjectNode" />
-              <item name="somethingoverflow" type="462c0819:PsiDirectoryNode" />
-              <item name="questions" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -310,11 +309,26 @@
       <option name="project" value="LOCAL" />
       <updated>1525601505610</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="search works now&#10;had to downgrade django&#10;so rest framework is removed">
+      <created>1525606291115</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1525606291116</updated>
+    </task>
+    <task id="LOCAL-00007" summary="voting is an action under question now&#10;mock is fixed with the new system&#10;reaction model is fixed">
+      <created>1525610375038</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1525610375038</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="0" width="1922" height="1046" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.5005208" side_tool="true" weight="0.32993197" />
@@ -322,8 +336,8 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32905984" />
       <window_info anchor="bottom" id="Python Console" order="10" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.3015873" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.49947917" visible="true" weight="0.3301282" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.104166664" />
+      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49947917" visible="true" weight="0.3301282" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.104166664" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="4" />
       <window_info anchor="right" id="SciView" internal_type="SLIDING" order="3" weight="0.3296875" />
@@ -377,7 +391,9 @@
     <MESSAGE value="tag bug fixes" />
     <MESSAGE value="edit and delete not finished!" />
     <MESSAGE value="working on search" />
-    <option name="LAST_COMMIT_MESSAGE" value="working on search" />
+    <MESSAGE value="search works now&#10;had to downgrade django&#10;so rest framework is removed" />
+    <MESSAGE value="voting is an action under question now&#10;mock is fixed with the new system&#10;reaction model is fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="voting is an action under question now&#10;mock is fixed with the new system&#10;reaction model is fixed" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -392,17 +408,13 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/questions/templates/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="841">
-          <caret line="29" column="22" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/questions/forms.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1073">
           <caret line="39" column="15" lean-forward="true" selection-start-line="39" selection-start-column="15" selection-end-line="39" selection-end-column="15" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -473,6 +485,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="435">
           <caret line="17" selection-start-line="17" selection-end-line="17" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -559,13 +574,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mock.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="16" column="48" selection-start-line="16" selection-start-column="48" selection-end-line="16" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/questions/templates/base.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
@@ -577,13 +585,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="247">
           <caret line="15" column="74" selection-start-line="15" selection-start-column="74" selection-end-line="15" selection-end-column="74" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/questions/templates/questions.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="665">
-          <caret line="35" selection-start-line="35" selection-end-line="35" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -608,20 +612,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/questions/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="15" selection-start-line="15" selection-end-line="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/questions/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="4" selection-start-line="4" selection-end-line="4" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/questions/search_indexes.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="228">
@@ -641,16 +631,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/questions/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/somethingoverflow/settings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1045">
@@ -660,11 +640,65 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/somethingoverflow/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="451">
-          <caret line="28" selection-start-line="28" selection-end-line="29" />
+        <state relative-caret-position="228">
+          <caret line="12" column="21" lean-forward="true" selection-start-line="12" selection-start-column="21" selection-end-line="12" selection-end-column="21" />
           <folding>
             <element signature="e#651#692#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/questions/templates/questions.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="163">
+          <caret line="19" column="55" selection-start-line="19" selection-start-column="55" selection-end-line="19" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mock.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="377">
+          <caret line="60" column="8" selection-start-line="60" selection-start-column="8" selection-end-line="60" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/questions/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/questions/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="535">
+          <caret line="184" column="17" selection-start-line="184" selection-start-column="17" selection-end-line="184" selection-end-column="17" />
+          <folding>
+            <element signature="e#24#63#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/questions/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="522">
+          <caret line="38" column="62" selection-start-line="38" selection-start-column="62" selection-end-line="38" selection-end-column="62" />
+          <folding>
+            <element signature="e#24#63#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TODO.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="1" column="25" lean-forward="true" selection-start-line="1" selection-start-column="25" selection-end-line="1" selection-end-column="25" />
         </state>
       </provider>
     </entry>
