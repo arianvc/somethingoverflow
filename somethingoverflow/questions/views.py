@@ -19,6 +19,7 @@ from taggit.models import Tag
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 import numpy as np
+import random
 from PIL import Image
 
 from .models import Question, Post, Reaction
@@ -30,9 +31,7 @@ random_str = lambda N: ''.join(
         string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(N))
 
 
-# Create your views here.
-
-## Register and activate
+# Register and activation
 def register(request):
     message = 'Bad register request' #TODO pass this
     if request.method == 'POST':
@@ -47,8 +46,8 @@ def register(request):
                 email = cd.get('email') #TODO: should be unique!
                 first_name = cd.get('first_name')
                 last_name = cd.get('last_name')
-                user = User.objects.create_user(username=username, password=password, email=email, \
-                        first_name=first_name, last_name=last_name)
+                user = User.objects.create_user(username=username, password=password, email=email,
+                                                first_name=first_name, last_name=last_name)
                 user.is_active = False
                 if user:
                     user.save()
@@ -61,7 +60,7 @@ def register(request):
                               'info@somethingoverflow.com',
                               [email],
                               )
-                    message = 'Check your email at '+ email
+                    message = 'Check your email at ' + email
                 else:
                     message = 'Error creating user'
     request.method = 'GET' #TODO: there must be a better way!
@@ -112,7 +111,7 @@ def log_in(request, **kwargs):
             else:
                 context['message'] = 'Invalid login'
         else:
-            form = LoginForm()
+            form = LoginForm() #?
     return render(request, 'login.html', context)
 
 
@@ -122,27 +121,20 @@ def log_out(request):
     return redirect('/login')
 
 
-## Site functionality
-# TODO: not @login_required! for form maybe
 def questions(request, tag_slug=None, page=0):
     page = int(page)
     question_list = Question.objects.order_by("-created")
     #TODO: paged!
     if request.method == 'POST':
         # new question
+        if not request.user.is_authenticated():
+            return HttpResponseForbidden()
         form = QuestionForm(request.POST)
         if form.is_valid():
             q = form.save(commit=False)
             q.author = request.user
             q.save()
             form.save_m2m()
-            '''f = form.cleaned_data
-            f['author'] = request.user
-            print('aaaaaaaaaaaaaaaaaaaaaaaaa', f['tags'])
-            q = Question(**f)
-            #q.save()
-            q.tags.add(*tuple(tags))
-            q.save()'''
             redirect('question', qid=q.id)
     if tag_slug:
         tag = get_object_or_404(Tag, slug=tag_slug)
@@ -154,12 +146,13 @@ def questions(request, tag_slug=None, page=0):
     return render(request, 'questions.html', context)
 
 
-# not @login_required!
 def question(request, qid=None, action=None):
     if request.method == 'GET':
         if 'qid' not in request.GET:
             raise Http404()
     elif request.method == 'POST':
+        if not request.user.is_authenticated():
+            return HttpResponseForbidden()
         print('new post', qid)
         if request.method == 'POST':
             form = PostForm(request.POST)
@@ -191,10 +184,7 @@ def question(request, qid=None, action=None):
             pass
         else:
             raise Http404()
-    else:
-        raise Http404()
     posts = Post.objects.filter(question__id=qid).order_by("-created")
-    daq = Question.objects.filter(id=qid).get()
     for post in posts:
         score = 0
         sc = Reaction.objects.filter(post=post).values('status').annotate(rcount=Count('status'))
@@ -205,8 +195,6 @@ def question(request, qid=None, action=None):
                 score += rt['rcount']
         post.score = score
         post.owner = request.user == post.author
-        #post.score = Reaction.objects.filter(question=post.question, status='p').count() - Reaction.objects.filter(
-        #    question=post.question, status='m').count()
     the_question = Question.objects.get(id=qid)
     the_question.owner = the_question.author == request.user
     context = {'question': the_question,
@@ -283,48 +271,3 @@ def edit_post(request, pid):
 
 def profile(request):
     pass
-
-
-def react(request, rtype, rid, reaction):  # TODO: uniqueness
-    react_dict = {'up': 'p', 'down': 'm'}
-    p = None
-    q = None
-    if rtype == 'q':
-        q = Question.objects.get(id=rid)
-        out = redirect('question', qid=rid)
-    elif rtype == 'p':
-        p = Post.objects.get(id=rid)
-        out = redirect('question', qid=p.question.id)
-    else:
-        out = HttpResponse('Wrong reaction type')
-    r = Reaction(status=react_dict[reaction], post=p, question=q, author=request.user)
-    r.save()
-    return out
-
-
-## Test area
-def simple_django_rest(request):
-    pass
-
-
-@login_required
-def react2(request, rtype, rid, reaction):  # TODO: uniqueness
-    react_dict = {'up': 'p', 'down': 'm'}
-    p = None
-    q = None
-    print(rtype)
-    if rtype == 'q':
-        q = Question.objects.get(id=rid)
-        daq = q
-    elif rtype == 'p':
-        p = Post.objects.get(id=rid)
-        daq = p.question
-    else:
-        return HttpResponseForbidden()
-    r, ifcreated = Reaction.objects.update_or_create(status=react_dict[reaction], post=p, question=q,
-                                                     author=request.user)
-    r.save()
-    out = Reaction.objects.filter(question=daq, status='p').count() - Reaction.objects.filter(question=daq,
-                                                                                              status='m').count()
-    out = HttpResponse('UP')
-    return out
