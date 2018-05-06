@@ -156,10 +156,11 @@ def questions(request, tag_slug=None, page=0):
 
 # not @login_required!
 def question(request, qid=None, action=None):
-    if not qid:
-        raise Http404()
-    if request.method == 'POST':
-        print('new question', qid)
+    if request.method == 'GET':
+        if 'qid' not in request.GET:
+            raise Http404()
+    elif request.method == 'POST':
+        print('new post', qid)
         if request.method == 'POST':
             form = PostForm(request.POST)
             if form.is_valid():
@@ -168,18 +169,25 @@ def question(request, qid=None, action=None):
                 f['question'] = Question.objects.get(id=qid)
                 q = Post(**f)
                 q.save()
-    actions = {'upvote': '',
-     'downvote': '',
-     'delete': '',
-     'edit': '',
-    }
+    actions = {'upvote': '', 'downvote': '', 'delete': '', 'edit': '', }
     if action in actions:
         if action == 'edit':
             redirect(action, etype='question', eid=qid)
         elif action == 'delete':
             Question.objects.filter(id=qid).delete()
         elif action == 'upvote' or action == 'downvote':
-            # TODO: better voting system
+            vote = {'upvote': 'p', 'downvote': 'm'}[action]
+            author = request.user
+            if 'pid' not in request.GET:
+                # Question
+                obje = 'q'
+                oid = qid
+            else:
+                pid = request.GET['pid']
+                obje = 'p'
+                oid = pid
+            r = Reaction(vote=vote, author=author, oid=oid, obje=obje)
+            r.save()
             pass
         else:
             raise Http404()

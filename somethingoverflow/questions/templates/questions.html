@@ -17,7 +17,7 @@
           </tr>
           {% for q in questions %}
           <tr>
-            <td><a href="/question/{{ q.id }}">{{ q.title|title }}</a></td>
+            <td><a href="{% url 'question' qid=q.id %}">{{ q.title|title }}</a></td>
               <td>{{ q.author|title }}</td><td>{{ q.created }}</td>
           </tr>
           {% endfor %}

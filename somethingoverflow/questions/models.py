@@ -32,18 +32,18 @@ class Post(models.Model):
 
 class Reaction(models.Model):  # TODO: not efficient, what's the alternative?
     class Meta:
-        unique_together = (('post', 'author', 'question'), )
+        unique_together = (('obje', 'author', 'oid'), )
 
     def __str__(self):
-        if self.question:
-            thing = 'q%d' % self.question.id
-        else:
-            thing = 'p%d' % self.post.id
-        return '{}:{}:{}'.format(self.author, thing, self.status)
-    TYPE = {'p':'Plus', 'm':'Minus'}
-    status = models.CharField(max_length=1, default='p', choices=dict2tuple4sqlenum(TYPE))
-    post = models.ForeignKey(Post, related_name='reactions_for_post', null=True, blank=True, on_delete=models.CASCADE)
-    question = models.ForeignKey(Question, related_name='reactions_for_question', null=True, blank=True, on_delete=models.CASCADE)
+        thing = self.OBJE[self.obje] + str(self.oid)
+        return '{}:{}:{}'.format(self.author, thing, self.vote)
+    VOTE = {'p': 'Plus', 'm': 'Minus'}
+    OBJE = {'q': 'Question', 'p': 'POST'}
+    oid = models.IntegerField(default=-1)
+    obje = models.CharField(max_length=1, default='p', choices=dict2tuple4sqlenum(OBJE))
+    vote = models.CharField(max_length=1, default='p', choices=dict2tuple4sqlenum(VOTE))
+    #post = models.ForeignKey(Post, related_name='reactions_for_post', null=True, blank=True, on_delete=models.CASCADE)
+    #question = models.ForeignKey(Question, related_name='reactions_for_question', null=True, blank=True, on_delete=models.CASCADE)
     author = models.ForeignKey(User, related_name='reactions_by', on_delete=models.CASCADE)
     # TODO: SHOULD BE UNIQUE
 
