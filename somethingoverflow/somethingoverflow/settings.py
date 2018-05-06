@@ -32,6 +32,15 @@ ALLOWED_HOSTS = []
 
 APPEND_SLASH = True
 
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
+        'URL': 'http://127.0.0.1:8983/solr/somethingoverflow'
+    },
+}
+
+# TODO: HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -41,12 +50,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'questions',
+    'haystack',
     'taggit',
     'bootstrap3',
     'rest_framework',
-    'restplay',
     'django.middleware.common',
+    'questions',
+    'restplay',
 ]
 
 MIDDLEWARE = [
@@ -58,6 +68,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 
 ROOT_URLCONF = 'somethingoverflow.urls'
 
