@@ -10,11 +10,11 @@ from questions.models import Question, Post, Reaction
 tags = ['c', 'c++', 'python', 'django',  'misc', 'ada', 'algorithms', 'general', 'template', 'detail']
     #    'mock', 'testing', 'nodejs', 'angularjs', 'jquery', 'ai', 'web', 'decorators', 'generators', 'iter']
     #, 'os', 'iot','sql', 'flask', 'pyramid', 'search', 'net', 'cmd', 'ls', 'cp', 'mv', 'bash', 'yarn', 'npm', 'other', 'd']
-usernames = ['arian', 'ali', 'hasan', 'mona', 'mahtab', 'bita', 'jack', 'john', 'sheida']
+usernames = ['arian2', 'ali', 'hasan', 'mona', 'mahtab', 'bita', 'jack', 'john', 'sheida']
 
 alpha = 0.5
 #p_c_zipf = [1. / (math.pow(float(i), alpha)) for i in range(1, len(tags)+1)]
-p_c_zipf = [5]*2 + [4]*3 + [3]*4 + [2]*5 + [1]*6
+p_c_zipf = [3.]*2 + [2.]*3 + [1.]*2 + [.5]*3
 p_c_zipf = np.multiply(1.0/sum(p_c_zipf), p_c_zipf).tolist()
 
 
@@ -69,8 +69,11 @@ def mock_reactions(count=400):
             obje = 'p'
             p = choice(ps)
             oid = p.id
-        r = Reaction(oid=oid, obje=obje, vote=vote, author=u)
-        r.save()
+        try:
+            r = Reaction(oid=oid, obje=obje, vote=vote, author=u)
+            r.save()
+        except Exception as e:
+            pass
 
 
 def mock_complete():

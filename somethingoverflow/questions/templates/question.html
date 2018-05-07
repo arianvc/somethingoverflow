@@ -18,12 +18,13 @@
             <table width="100%"><tr><td width="30px">
           <span class="glyphicon glyphicon-thumbs-up" id="q{{ question.id }}" onclick="update_score(this, 'question', 'up');"></span>
         <br/> <div id="p{{ question.score }}">{{ question.score }}</div> <br/><span class="glyphicon glyphicon-thumbs-down" id="q{{ question.id }}" onclick="update_score(this, 'question', 'down');"></span>
-        </td><tr>
+        </td><tr>{% if question.author == request.user %}
                 <a href="{% url 'general_edit' etype='question' eid=question.id %}">
                     <span class="glyphicon glyphicon-pencil"></span>
-                </a><a href="{% url 'question' action='delete' qid=question.id %}">
+                </a><a href="{% url 'question'%}?action=delete&&qid={{question.id}}">
                     <span class="glyphicon glyphicon-trash"></span>
                 </a>
+                {% endif %}
             </tr>
                 <td>{{ question.body }}</td>
             </tr><tr><td>
@@ -39,7 +40,15 @@
             <table width="100%"><tr><td width="30px">
           <span class="glyphicon glyphicon-thumbs-up" id="p{{ post.id }}" onclick="update_score(this, 'post', 'up');"></span>
         <br/> <div id="p{{ post.score }}">{{ post.score }}</div> <br/><span class="glyphicon glyphicon-thumbs-down" id="p{{ post.id }}" onclick="update_score(this, 'post', 'down');"></span>
-        </td><td>{{ post.body }}</td>
+        </td><tr>{% if post.author == request.user %}
+                <a href="{% url 'general_edit' etype='question' eid=post.id %}">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </a><a href="{% url 'question'%}?action=delete&&qid={{question.id}}&&pid={{ post.id }}">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </a>
+                {% endif %}
+            </tr>
+                <td>{{ post.body }}</td>
             </tr><tr><td></td><td><div style="float:right"><a href="/profile/{{ post.author.username }}">{{ post.author.username }}</a></div></td></tr>
             </table>
         </td>

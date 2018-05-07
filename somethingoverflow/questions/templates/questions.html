@@ -17,19 +17,34 @@
           </tr>
           {% for q in questions %}
           <tr>
-            <td><a href="{% url 'question' qid=q.id %}">{{ q.title|title }}</a></td>
+            <td><a href="{% url 'question' %}?qid={{ q.id }}">{{ q.title|title }}</a></td>
               <td>{{ q.author|title }}</td><td>{{ q.created }}</td>
           </tr>
           {% endfor %}
         </table>
+    <div class="pagination">
+        <span class="step-links">
+            {% if questions.has_previous %}
+                <a href="?page={{ questions.previous_page_number }}"><span class="glyphicon glyphicon-triangle-left">Previous</span></a>
+            {% endif %}
+            <span class="current">
+            Page {{ questions.number }} of {{ questions.paginator.num_pages }}
+            </span>
+            {% if questions.has_next %}
+                <a href="?page={{ questions.next_page_number }}">Next<span class="glyphicon glyphicon-triangle-right"></span></a>
+            {% endif %}
+        </span>
+    </div>
     </div>
     <div class="col-md-4 col-md-offset-4">
-    <form role="form"  class="form-inline" action="/questions/" method="post">
+    Can't find your question? Ask!
+    <form role="form" action="/questions/" method="post">
       {% csrf_token %}
-      {% bootstrap_form questionform %}
+      {% bootstrap_form questionform layout='row' %}
       <div class="form-group">
         <button type="submit" class="btn btn-primary">Ask Question</button>
       </div>
     </form>
   </div>
+
 {% endblock %}

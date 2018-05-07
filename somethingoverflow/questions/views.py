@@ -26,9 +26,15 @@ from .models import Question, Post, Reaction
 from .forms import LoginForm, RegisterForm, RecoverForm, QuestionForm, PostForm
 
 # Handy functions
-random_str = lambda N: ''.join(
+random_str = lambda n: ''.join(
     random.SystemRandom().choice(
-        string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(N))
+        string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(n))
+
+
+def get_redirect(view_name, **kwargs):
+    r = redirect(view_name)
+    r['Location'] += '?'.join([str(k) + '=' + str(kwargs[k]) for k in kwargs])
+    return r
 
 
 # Register and activation
@@ -69,8 +75,6 @@ def register(request):
 
 def activate(request):
     message = 'Wrong activation link, please try again'
-    #data = request.GET
-    #if 'username' in data and 'code' in data:
     username = request.GET.get('username', '')
     code = request.GET.get('code', '')
     if username and code:
@@ -87,7 +91,7 @@ def activate(request):
     return log_in(request, message=message)
 
 
-## Logging in and out
+# Logging in and out
 def log_in(request, **kwargs):
     context = {'message': kwargs['message'] if 'message' in kwargs else 'Welcome!',
                'loginform': LoginForm,
@@ -135,21 +139,34 @@ def questions(request, tag_slug=None, page=0):
             q.author = request.user
             q.save()
             form.save_m2m()
-            redirect('question', qid=q.id)
+            get_redirect('question', qid=q.id)
     if tag_slug:
         tag = get_object_or_404(Tag, slug=tag_slug)
         question_list = question_list.filter(tags__in=[tag])
+    paginator = Paginator(question_list, 10)  # 3 posts in each page
+    page = request.GET.get('page')
+    try:
+        questions = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer deliver the first page
+        questions = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range deliver last page of results
+        questions = paginator.page(paginator.num_pages)
+    except Exception as e:
+        print('shit!', e)
 
-    context = {'questions': question_list[page*10:(page+1)*10],
+    context = {'questions': questions, # [page*10:(page+1)*10], # smart but there's a better way
                'questionform': QuestionForm,
                }
     return render(request, 'questions.html', context)
 
 
-def question(request, qid=None, action=None):
+def question(request): # , qid=None, action=None):
     if request.method == 'GET':
         if 'qid' not in request.GET:
             raise Http404()
+        action = request.GET.get("action", None)
     elif request.method == 'POST':
         if not request.user.is_authenticated():
             return HttpResponseForbidden()
@@ -162,12 +179,15 @@ def question(request, qid=None, action=None):
                 f['question'] = Question.objects.get(id=qid)
                 q = Post(**f)
                 q.save()
+    qid = int(request.GET['qid'])
+    assert isinstance(qid, int)
     actions = {'upvote': '', 'downvote': '', 'delete': '', 'edit': '', }
     if action in actions:
         if action == 'edit':
             redirect(action, etype='question', eid=qid)
         elif action == 'delete':
             Question.objects.filter(id=qid).delete()
+            return redirect('questions')
         elif action == 'upvote' or action == 'downvote':
             vote = {'upvote': 'p', 'downvote': 'm'}[action]
             author = request.user
@@ -187,14 +207,15 @@ def question(request, qid=None, action=None):
     posts = Post.objects.filter(question__id=qid).order_by("-created")
     for post in posts:
         score = 0
-        sc = Reaction.objects.filter(post=post).values('status').annotate(rcount=Count('status'))
+        sc = Reaction.objects.filter(obje='p', oid=post.id).values('vote').annotate(rcount=Count('vote'))
         for rt in sc:
-            if rt['status'] == 'm':
+            if rt['vote'] == 'm':
                 score -= rt['rcount']
-            if rt['status'] == 'p':
+            if rt['vote'] == 'p':
                 score += rt['rcount']
         post.score = score
-        post.owner = request.user == post.author
+        if request.user.is_authenticated():
+            post.owner = request.user == post.author
     the_question = Question.objects.get(id=qid)
     the_question.owner = the_question.author == request.user
     context = {'question': the_question,
