@@ -16,7 +16,7 @@ matplotlib==2.2.2
 numpy==1.14.2
 pefile==2017.11.5
 Pillow==5.1.0
-Pygments==2.2.0
+Pygments==2.7.4
 pyparsing==2.2.0
 pysolr==3.3.2
 python-dateutil==2.7.2
